@@ -1,0 +1,9 @@
+<litepal>
+    <dbname value="MyWeather"/>
+    <version value="1"/>
+    <list>
+        <mapping class="wp.com.myweather.db.Province"/>
+        <mapping class="wp.com.myweather.db.City"/>
+        <mapping class="wp.com.myweather.db.County"/>
+    </list>
+</litepal>
