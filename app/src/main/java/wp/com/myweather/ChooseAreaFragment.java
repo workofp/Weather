@@ -34,6 +34,7 @@ import wp.com.myweather.util.Utility;
 /**
  * Created by WP on 2017/7/28.
  */
+// TODO: 2017/7/29  根据不同的地区显示不同的信息
 
 public class ChooseAreaFragment extends Fragment {
     public static final int LEVEL_PROVINCE = 0;
@@ -105,11 +106,19 @@ public class ChooseAreaFragment extends Fragment {
                     queryCounties();
                 } else if (currentLevel == LEVEL_COUNTY) {
                     String weatherId = countyList.get(position).getWeatherId();
-                    Log.e(TAG, "onItemClick: "+weatherId);
-                    Intent intent = new Intent(getActivity(), WeatherActivity.class);
-                    intent.putExtra("weather_id", weatherId);
-                    startActivity(intent);
-                  //  getActivity().finish();
+                    if (getActivity() instanceof MainActivity) {
+                        Log.e(TAG, "onItemClick: "+getActivity().toString() );
+                        Log.e(TAG, "onItemClick: " + weatherId);
+                        Intent intent = new Intent(getActivity(), WeatherActivity.class);
+                        intent.putExtra("weather_id", weatherId);
+                        startActivity(intent);
+                        getActivity().finish();
+                    }else if (getActivity() instanceof WeatherActivity){
+                        WeatherActivity activity=(WeatherActivity)getActivity();
+                        activity.drawerLayout.closeDrawers();
+                        activity.swipeRefresh.setRefreshing(true);
+                        activity.requestWeather(weatherId);
+                    }
                 }
             }
         });
