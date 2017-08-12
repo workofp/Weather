@@ -2,9 +2,14 @@ package wp.com.myweather;
 
 import android.app.ProgressDialog;
 import android.content.Intent;
+import android.graphics.Color;
+import android.os.Build;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentManager;
+import android.support.v4.app.FragmentTransaction;
+import android.support.v4.view.GravityCompat;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -17,8 +22,14 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import org.litepal.crud.DataSupport;
+import org.xml.sax.helpers.XMLReaderFactory;
+import org.xmlpull.v1.XmlPullParser;
+import org.xmlpull.v1.XmlPullParserFactory;
 
+import java.io.FileInputStream;
 import java.io.IOException;
+import java.io.InputStreamReader;
+import java.io.StringReader;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -92,6 +103,8 @@ public class ChooseAreaFragment extends Fragment {
         return view;
     }
 
+
+
     @Override
     public void onActivityCreated(@Nullable Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
@@ -116,7 +129,9 @@ public class ChooseAreaFragment extends Fragment {
                     }else if (getActivity() instanceof WeatherActivity){
                         WeatherActivity activity=(WeatherActivity)getActivity();
                         activity.drawerLayout.closeDrawers();
-                        activity.swipeRefresh.setRefreshing(true);
+                        if (Build.VERSION.SDK_INT >= 21)
+                        activity.getWindow().setStatusBarColor(Color.TRANSPARENT);
+                       // activity.swipeRefresh.setRefreshing(true);
                         activity.requestWeather(weatherId);
                     }
                 }

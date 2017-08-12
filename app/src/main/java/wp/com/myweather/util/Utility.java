@@ -1,6 +1,7 @@
 package wp.com.myweather.util;
 
 import android.text.TextUtils;
+import android.util.Log;
 
 import com.google.gson.Gson;
 
@@ -12,6 +13,8 @@ import wp.com.myweather.db.City;
 import wp.com.myweather.db.County;
 import wp.com.myweather.db.Province;
 import wp.com.myweather.gson.Weather;
+
+import static android.content.ContentValues.TAG;
 
 /**
  * Created by WP on 2017/7/28.
@@ -105,8 +108,9 @@ public class Utility {
 
         try{
             JSONObject jsonObject=new JSONObject(response);
-            JSONArray jsonArray=jsonObject.getJSONArray("HeWeather");
+            JSONArray jsonArray=jsonObject.getJSONArray("HeWeather5");
             String weatherContent=jsonArray.getJSONObject(0).toString();
+            Log.e(TAG, "handleWeatherResponse: "+weatherContent);
             return new Gson().fromJson(weatherContent,Weather.class);
 
         }catch(Exception e){
